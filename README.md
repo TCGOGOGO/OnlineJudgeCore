@@ -30,7 +30,7 @@ mv libjson_linux-gcc-4.9.1_libmt.a libjson.a
 
 sudo cp -rf jsoncpp-src-0.5.0/include/json /usr/include/
 
-sudo cp jsoncpp-src-0.5.0/libs/Linux-gcc-5.4.0/libjson /usr/local/lib/
+sudo cp jsoncpp-src-0.5.0/libs/Linux-gcc-5.4.0/libjson.a /usr/local/lib/
 ```
 
 然后执行make即可生成可运行文件judge
