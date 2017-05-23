@@ -55,6 +55,18 @@ static int get_language(const string &filename) {
     return LANG::UNKNOWN;
 }
 
+static int get_language(int compilerType) {
+    if (compilerType == 0) {
+        return LANG::C;
+    } else if (compilerType == 1 || compilerType == 2) {
+        return LANG::CPP;
+    } else if (compilerType == 3) {
+        return LANG::JAVA;
+    } else if (compilerType == 4 || compilerType == 5) {
+        return LANG::PYTHON;
+    }
+}
+
 static int set_timer(int which, int milliseconds) {
 	struct itimerval delay;
 	delay.it_value.tv_sec 		= milliseconds / 1000;
@@ -76,9 +88,10 @@ static void timeout_callback(int signo) {
 static void parse_parameters_and_init(int argc, char *argv[]) {
 	extern char *optarg;
 	int opt;
-	while ((opt = getopt(argc, argv, "c:t:m:d:C:s")) != -1) {
+	while ((opt = getopt(argc, argv, "c:l:t:m:d:C:s")) != -1) {
 		switch (opt) {
 			case 'c': FILE_PATH::source_code 	= optarg; 		break;
+            case 'l': PROBLEM::compiler         = atoi(optarg); break;
 			case 't': PROBLEM::time_limit 		= atoi(optarg); break;
 			case 'm': PROBLEM::memory_limit 	= atoi(optarg);	break;
 			case 'd': FILE_PATH::runtime_dir 	= optarg; 		break;
@@ -90,7 +103,8 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
                 exit(EXIT::UNKNOWN_PARAM);
 		}
 	}
- 	PROBLEM::lang = get_language(FILE_PATH::source_code);
+    //0:gcc 1:g++ 2:g++11 3:java8 4:python 5:python3
+	PROBLEM::lang = get_language(PROBLEM::compiler);
  	if (PROBLEM::lang == LANG::UNKNOWN) {
  		LOG_WARNING("Unknown language: %d", PROBLEM::lang);
         exit(EXIT::UNKNOWN_LANG);
@@ -153,7 +167,7 @@ static void compile_source_code() {
     	}
     	signal(SIGALRM, timeout_callback);
 
-    	exec_compile(PROBLEM::lang);
+        exec_compile(PROBLEM::compiler);
 	} else {
 		if (waitpid(compiler, &status, WUNTRACED) == -1) {
             LOG_WARNING("Waitpid error");
@@ -381,7 +395,7 @@ static void execute_source_code() {
                 PROBLEM::memory_usage = PROBLEM::memory_limit;
                 PROBLEM::result = RESULT::MLE;
                 ptrace(PTRACE_KILL, executor, NULL, NULL);
-                exit(EXIT::JUDGE);
+                exit(EXIT::OK);
         	}
 
     		if (WIFEXITED(status)) {
@@ -443,7 +457,7 @@ static void execute_source_code() {
             	}
 
                 ptrace(PTRACE_KILL, executor, NULL, NULL);
-                break;
+                exit(EXIT::OK);
             }
 
             if (ptrace(PTRACE_GETREGS, executor, NULL, &regs) < 0) {

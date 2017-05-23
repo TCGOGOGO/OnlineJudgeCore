@@ -38,9 +38,22 @@ namespace LANG {
 
 }
 
+namespace COMPILER {
+
+	const int UNKNOWN = -1;
+	const int C = 0;
+	const int CPP = 1;
+	const int CPP11 = 2;
+	const int JAVA = 3;
+	const int PYTHON = 4;
+	const int PYTHON3 = 5;
+
+}
+
 namespace PROBLEM {
 
 	int lang = 0;
+	int compiler = 0;
 	int time_limit = 1000;
 	int memory_limit = 65536;
 	int output_limit = 1024000;

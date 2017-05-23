@@ -6,21 +6,27 @@
 #include "common.h"
 #include "logger.h"
 
-void exec_compile(int lang) {
-	switch (lang) {
-		case LANG::C:
+void exec_compile(int compiler) {
+	switch (compiler) {
+		case COMPILER::C:
 			LOG_TRACE("Start compile: gcc -o %s %s -static -w -lm -std=c99 -O2 -DONLINE_JUDGE",
             		FILE_PATH::exec.c_str(), FILE_PATH::source_code.c_str());
             execlp("gcc", "gcc", "-o", FILE_PATH::exec.c_str(), FILE_PATH::source_code.c_str(),
             		"-static", "-w", "-lm", "-std=c99", "-O2", "-DONLINE_JUDGE", NULL);
             break;
-		case LANG::CPP:
+		case COMPILER::CPP:
 			LOG_TRACE("Start compile: g++ -o %s %s -static -w -lm -O2 -DONLINE_JUDGE",
+                    FILE_PATH::exec.c_str(), FILE_PATH::source_code.c_str());
+            execlp("g++", "g++", "-o", FILE_PATH::exec.c_str(), FILE_PATH::source_code.c_str(),
+                    "-static", "-w", "-lm", "-DONLINE_JUDGE", NULL);
+            break;
+        case COMPILER::CPP11:
+			LOG_TRACE("Start compile: g++ -o %s %s -static -w -lm -O2 -std=c++11 -DONLINE_JUDGE",
                     FILE_PATH::exec.c_str(), FILE_PATH::source_code.c_str());
             execlp("g++", "g++", "-o", FILE_PATH::exec.c_str(), FILE_PATH::source_code.c_str(),
                     "-static", "-w", "-lm", "-std=c++11", "-DONLINE_JUDGE", NULL);
             break;
-		case LANG::JAVA:
+		case COMPILER::JAVA:
 			LOG_TRACE("Start compile: javac %s -d %s", FILE_PATH::source_code.c_str(), 
 					FILE_PATH::runtime_dir.c_str());
             execlp("javac", "javac", FILE_PATH::source_code.c_str(), "-d", 
@@ -34,17 +40,21 @@ void exec_compile(int lang) {
 	}
 }
 
-void exec_run(int lang) {
-	switch (lang) {
-		case LANG::C:
-		case LANG::CPP:
+void exec_run(int compiler) {
+	switch (compiler) {
+		case COMPILER::C:
+		case COMPILER::CPP:
+		case COMPILER::CPP11:
 			execl("./a.out", "a.out", NULL);
             break;
-		case LANG::JAVA:
+		case COMPILER::JAVA:
 			execlp("java", "java", "Main", NULL);
             break;
-		case LANG::PYTHON:
+		case COMPILER::PYTHON:
 			execlp("python", "python", FILE_PATH::source_code.c_str(), NULL);
+			break;
+		case COMPILER::PYTHON3:
+			execlp("python3", "python3", FILE_PATH::source_code.c_str(), NULL);
 			break;
 		default:
 			LOG_WARNING("exec run error");
