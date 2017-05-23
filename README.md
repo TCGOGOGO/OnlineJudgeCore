@@ -58,11 +58,11 @@ sudo make
 ### 示例 ###
 
 ```
-sudo ./judge -c test/a.cpp -l 2 -t 1000 -m 65535
+sudo ./judge -c test/a.cpp -l 2 -d test
 ```
 
 ```
-sudo ./jduge -c test/a.cpp -l 2 -t 1000 -m 65535 -s -C test/SPJ.cpp
+sudo ./jduge -c test/a.cpp -l 2 -t 2000 -m 65535 -d test -s -C test/SPJ.cpp
 ```
 
 ### 运行结果 ###
