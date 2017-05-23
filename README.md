@@ -43,9 +43,11 @@ sudo make
 
 -c 源代码相对路径
 
--t 运行时的时间限制
+-l 选择编译器
 
--m 运行时的内存限制
+-t 运行时的时间限制(默认为1000ms)
+
+-m 运行时的内存限制(默认为65536KB)
 
 -d 运行时"沙盒"的相对路径
 
@@ -56,11 +58,11 @@ sudo make
 ### 示例 ###
 
 ```
-sudo ./judge -c test/a.cpp -t 1000 -m 65535
+sudo ./judge -c test/a.cpp -l 2 -t 1000 -m 65535
 ```
 
 ```
-sudo ./jduge -c test/a.cpp -t 1000 -m 65535 -s -C test/SPJ.cpp
+sudo ./jduge -c test/a.cpp -l 2 -t 1000 -m 65535 -s -C test/SPJ.cpp
 ```
 
 ### 运行结果 ###
