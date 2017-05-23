@@ -27,7 +27,7 @@
 #include "exec.h"
 
 static string get_filename(string file) {
-	string filename = "";
+    string filename = "";
 	for (int i = 0; i < file.size(); i ++) {
 		if (file[i] == '.') {
 			break;
@@ -38,7 +38,7 @@ static string get_filename(string file) {
 }
 
 static int get_language(const string &filename) {
-	string suffix = "";
+    string suffix = "";
     for (int i = filename.size() - 1; i >= 0 && filename[i] != '.'; i --) {
         suffix += filename[i];
     }
@@ -68,10 +68,10 @@ static int get_language(int compilerType) {
 }
 
 static int set_timer(int which, int milliseconds) {
-	struct itimerval delay;
-	delay.it_value.tv_sec 		= milliseconds / 1000;
-	delay.it_value.tv_usec 		= 0;
-	delay.it_interval.tv_sec  	= 0;
+    struct itimerval delay;
+    delay.it_value.tv_sec 		= milliseconds / 1000;
+    delay.it_value.tv_usec 		= 0;
+    delay.it_interval.tv_sec  	= 0;
     delay.it_interval.tv_usec 	= 0;
     return setitimer(which, &delay, NULL);
 }
@@ -115,11 +115,11 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
  		FILE_PATH::exec_spj = FILE_PATH::runtime_dir + "/SPJ";
  		if (PROBLEM::spj_lang == LANG::UNKNOWN) {
  			LOG_WARNING("Unknown language: %d", PROBLEM::spj_lang);
-        	exit(EXIT::UNKNOWN_LANG);
+            exit(EXIT::UNKNOWN_LANG);
  		}
  	}
 
- 	FILE_PATH::exec 			= FILE_PATH::runtime_dir + "/a.out";
+    FILE_PATH::exec 			= FILE_PATH::runtime_dir + "/a.out";
     FILE_PATH::input_dir 		= FILE_PATH::runtime_dir + "/in";
     FILE_PATH::output_dir 		= FILE_PATH::runtime_dir + "/out";
     FILE_PATH::exec_output_dir 	= FILE_PATH::runtime_dir + "/exec_out";
@@ -130,7 +130,7 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
         system(rm_exec_output_files.c_str());
     }
     FILE_PATH::result 			= FILE_PATH::runtime_dir + "/result.json";
-    FILE_PATH::compiler_stderr 	= FILE_PATH::runtime_dir + "/stderr_file_compiler.txt";
+    FILE_PATH::compiler_stderr  = FILE_PATH::runtime_dir + "/stderr_file_compiler.txt";
 
     LIMIT::JUDGE_TIME += PROBLEM::time_limit;
 }
