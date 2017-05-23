@@ -43,7 +43,7 @@ sudo make
 
 -c 源代码相对路径
 
--l 选择编译器
+-l 选择编译器(0:gcc 1:g++ 2:g++11 3:java8 4:python 5:python3)
 
 -t 运行时的时间限制(默认为1000ms)
 
