@@ -76,12 +76,17 @@ static int set_timer(int which, int milliseconds) {
     return setitimer(which, &delay, NULL);
 }
 
-static void timeout_callback(int signo) {
+static void callback(int signo) {
     if (signo == SIGALRM) {
     	LOG_WARNING("Compile timeout");
     	PROBLEM::result = RESULT::CE;
         PROBLEM::extra_message = "Compile Out of Time Limit";
         exit(EXIT::COMPILE_TIMEOUT);
+    } else if (signo == SIGXFSZ) {
+        LOG_WARNING("Compile output limit exceeded");
+        PROBLEM::result = RESULT::CE;
+        PROBLEM::extra_message = "Compile Output Limit Exceeded";
+        exit(EXIT::COMPILE_OUTPUT_LIMIT_EXCEEDED);
     }
 }
 
@@ -126,7 +131,7 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
     if (access(FILE_PATH::exec_output_dir.c_str(), 0) == -1) {
         system(("mkdir " + FILE_PATH::exec_output_dir).c_str());
     } else {
-        string rm_exec_output_files = "rm " + FILE_PATH::exec_output_dir + "/*";
+        string rm_exec_output_files = "rm -rf " + FILE_PATH::exec_output_dir;
         system(rm_exec_output_files.c_str());
     }
     FILE_PATH::result 			= FILE_PATH::runtime_dir + "/result.json";
@@ -153,7 +158,7 @@ static void compile_source_code() {
 		LOG_WARNING("Fail to fork compiler");
 		exit(EXIT::COMPILE);
 	} else if (compiler == 0) {
-		log_add_info("compiler");
+        log_add_info("compiler");
 
 		stderr = freopen(FILE_PATH::compiler_stderr.c_str(), "w", stderr);
         if (stderr == NULL) {
@@ -161,11 +166,33 @@ static void compile_source_code() {
             exit(EXIT::COMPILE);
         }
 
+        rlimit lim;
+        lim.rlim_max = LIMIT::COMPILE_OUTPUT_SIZE * LIMIT::MEM_UNIT;
+        lim.rlim_cur = lim.rlim_max;
+        if (setrlimit(RLIMIT_FSIZE, &lim) < 0) {
+            LOG_WARNING("Fail to setrlimit for RLIMIT_FSIZE");
+            exit(EXIT::SET_LIMIT);
+        }
+
 		if (EXIT_SUCCESS != set_timer(ITIMER_REAL, LIMIT::JUDGE_TIME)) {
         	LOG_WARNING("Fail to set alarm, %d: %s", errno, strerror(errno));
         	exit(EXIT::SET_TIMER_ERROR);
     	}
-    	signal(SIGALRM, timeout_callback);
+        signal(SIGALRM, callback);
+        signal(SIGXFSZ, callback);
+        system(("chmod 600 " + FILE_PATH::input_dir).c_str());
+        system(("chmod 600 " + FILE_PATH::output_dir).c_str());
+        struct passwd *nobody = getpwnam("nobody");
+
+        if (nobody == NULL) {
+            LOG_WARNING("Cannot find nobody. %d: %s", errno, strerror(errno));
+            exit(EXIT::SET_SECURITY);
+        }
+        if (EXIT_SUCCESS != setuid(nobody -> pw_uid)) {
+            LOG_WARNING("Setuid(%d) failed. %d: %s",
+                nobody -> pw_uid, errno, strerror(errno));
+            exit(EXIT::SET_SECURITY);
+        }
 
         exec_compile(PROBLEM::compiler);
 	} else {
@@ -222,7 +249,7 @@ static void compile_spj_code() {
         	LOG_WARNING("Fail to set alarm, %d: %s", errno, strerror(errno));
         	exit(EXIT::SET_TIMER_ERROR);
     	}
-    	signal(SIGALRM, timeout_callback);
+        signal(SIGALRM, callback);
 
     	exec_compile_spj(PROBLEM::spj_lang);
 	} else {
@@ -344,6 +371,7 @@ static void set_runtime_limit() {
     	LOG_WARNING("Fail to setrlimit for RLIMIT_FSIZE");
         exit(EXIT::SET_LIMIT);
     }
+
 
     if (EXIT_SUCCESS != set_timer(ITIMER_REAL, PROBLEM::time_limit)) {
     	LOG_WARNING("Fail to set alarm, %d: %s", errno, strerror(errno));

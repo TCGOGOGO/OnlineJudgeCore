@@ -14,11 +14,8 @@ COPY jsoncpp-src-0.5.0.tar.gz /tmp
 RUN cd /tmp && tar -xvzf jsoncpp-src-0.5.0.tar.gz && cd jsoncpp-src-0.5.0 && scons platform=linux-gcc
 RUN mv /tmp/jsoncpp-src-0.5.0/libs/linux-gcc-5.4.0/libjson_linux-gcc-5.4.0_libmt.a /tmp/jsoncpp-src-0.5.0/libs/linux-gcc-5.4.0/libjson.a && cp -rf /tmp/jsoncpp-src-0.5.0/include/json /usr/include/ && cp /tmp/jsoncpp-src-0.5.0/libs/linux-gcc-5.4.0/libjson.a /usr/local/lib/
 
-RUN cd /tmp && git clone https://github.com/TCGOGOGO/OnlineJudgeCore.git && cd OnlineJudgeCore && make
+RUN cd /tmp && git clone https://github.com/TCGOGOGO/OnlineJudgeCore.git && cd OnlineJudgeCore && make && chmod 777 judge
 
-#RUN cd /tmp && cd OnlineJudgeCore && make
-RUN cd /tmp/OnlineJudgeCore && chmod 777 judge
-
-WORKDIR /tmp/OnlineJudgeCore/test/
+WORKDIR /tmp/OnlineJudgeCore/sandbox/
 EXPOSE 8080
-CMD cd /tmp/OnlineJudgeCore && ./judge -c test/a.cpp -l 2 -d test && cat /tmp/OnlineJudgeCore/test/result.json
+CMD cd /tmp/OnlineJudgeCore && ./judge -c sandbox/a.cpp -l 2 -d sandbox && cat /tmp/OnlineJudgeCore/sandbox/result.json

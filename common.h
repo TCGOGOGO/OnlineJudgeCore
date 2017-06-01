@@ -9,6 +9,7 @@ namespace LIMIT {
 	int JUDGE_TIME 	 	= 15000;
 	int SPJ_TIME		= 10000;
 	int COMPILE_TIME 	= 10000;
+	int COMPILE_OUTPUT_SIZE = 20000;
 	int STACK_SIZE 		= 8192;
 
 	const int MEM_UNIT 	= 1024;
@@ -106,6 +107,7 @@ namespace EXIT {
 	const int SET_SECURITY     = 17;  	//设置安全限制错误退出
 	const int JUDGE            = 21;  	//程序调用错误退出
 	const int COMPILE_TIMEOUT  = 36;  	//超时退出
+	const int COMPILE_OUTPUT_LIMIT_EXCEEDED = 37; //编译输出文件的大小限制
 	const int UNKNOWN          = 127; 	//不详
 
 }
