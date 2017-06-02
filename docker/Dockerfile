@@ -2,7 +2,12 @@ FROM ubuntu:latest
 RUN rm /etc/apt/sources.list
 COPY sources.list /etc/apt/
 RUN apt-get update
-RUN apt-get -y install build-essential software-properties-common python-software-properties python python3 git
+RUN apt-get -y install build-essential --fix-missing
+RUN apt-get -y install software-properties-common --fix-missing
+RUN apt-get -y install python-software-properties --fix-missing
+RUN apt-get -y install python --fix-missing
+RUN apt-get -y install python3 --fix-missing
+RUN apt-get -y install git --fix-missing
 RUN add-apt-repository -y ppa:webupd8team/java
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
