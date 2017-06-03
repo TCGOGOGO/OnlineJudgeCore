@@ -1,3 +1,0 @@
-sandbox/a.c:3:1: error: unknown type name ‘it’
- it main() {
- ^

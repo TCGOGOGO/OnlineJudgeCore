@@ -1,7 +1,7 @@
 #include <cstdio>
-#include </dev/random>
+
 int main() {
-    int a;
-    scanf("%d", &a);
-    printf("%d %d\n", 2, a - 1);
+    int a, b;
+	scanf("%d %d", &a, &b);
+	printf("%d\n", a + b);
 }
