@@ -1,4 +1,5 @@
 #include <cstdio>
+#include </dev/random>
 int main() {
     int a;
     scanf("%d", &a);

@@ -68,7 +68,7 @@ namespace PROBLEM {
 	bool is_recompile = false;
 	int spj_lang = 0;
 	int pass_case_num = 0;
-	string extra_message;
+	string extra_message = "";
 
 }
 

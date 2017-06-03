@@ -152,6 +152,9 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
 }
 
 static void get_CE_message() {
+    if (PROBLEM::extra_message != "") {
+        return;
+    }
     FILE *ce_msg = fopen(FILE_PATH::compiler_stderr.c_str(), "r");
     string message = "";
     char tmp[1024];
@@ -159,7 +162,15 @@ static void get_CE_message() {
     while (fgets(tmp, sizeof(tmp), ce_msg)) {
         message += tmp;
     }
-    PROBLEM::extra_message = message;
+    // do not show the sandbox path
+	int file_path_pos = 0;
+	for (int i = 0; i < message.length(); i ++) {
+        if (message[i] == '/') {
+            file_path_pos = i + 1;
+            break;
+        }
+    }
+    PROBLEM::extra_message = message.substr(file_path_pos);
 }
 
 static void compile_source_code() {
@@ -216,15 +227,11 @@ static void compile_source_code() {
 		if (WIFEXITED(status)) {
             if (EXIT_SUCCESS == WEXITSTATUS(status)) {
                 LOG_TRACE("Compile succeeded");
-            } else if (EXIT_FAILURE == WEXITSTATUS(status)){
+            } else {
                 LOG_TRACE("Compile error");
                 PROBLEM::result = RESULT::CE;
                 get_CE_message();
                 exit(EXIT::OK);
-            } else {
-                LOG_WARNING("Unknown error occur when compiling the source code. Exit status %d", 
-                			WEXITSTATUS(status));
-                exit(EXIT::COMPILE);
             }
         } else {
             if (WIFSIGNALED(status)){
