@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unistd.h>
+#include <cstdlib>
 #include "common.h"
 #include "logger.h"
 
@@ -29,8 +30,7 @@ void exec_compile(int compiler) {
 		case COMPILER::JAVA:
 			LOG_TRACE("Start compile: javac %s -d %s", FILE_PATH::source_code.c_str(), 
 					FILE_PATH::runtime_dir.c_str());
-            execlp("javac", "javac", FILE_PATH::source_code.c_str(), "-d", 
-            		FILE_PATH::runtime_dir.c_str(), NULL);
+            execlp("javac", "javac", "-J-Xms32m", "-J-Xmx256m", FILE_PATH::source_code.c_str(),                    "-d", FILE_PATH::runtime_dir.c_str(), NULL);
             break;
 		case LANG::PYTHON:
 			break;
@@ -51,10 +51,10 @@ void exec_run(int compiler) {
 			execlp("java", "java", "Main", NULL);
             break;
 		case COMPILER::PYTHON:
-			execlp("python", "python", FILE_PATH::source_code.c_str(), NULL);
+			execlp("python", "python", FILE_PATH::source_code_name.c_str(), NULL);
 			break;
 		case COMPILER::PYTHON3:
-			execlp("python3", "python3", FILE_PATH::source_code.c_str(), NULL);
+			execlp("python3", "python3", FILE_PATH::source_code_name.c_str(), NULL);
 			break;
 		default:
 			LOG_WARNING("exec run error");
@@ -78,14 +78,6 @@ void exec_compile_spj(int lang) {
             execlp("g++", "g++", FILE_PATH::spj_code.c_str(), "-o", 
             		FILE_PATH::exec_spj.c_str(), NULL);
             break;
-		case LANG::JAVA:
-			LOG_TRACE("Start compile spj: javac %s -d %s", FILE_PATH::source_code.c_str(), 
-					FILE_PATH::runtime_dir.c_str());
-            execlp("javac", "javac", FILE_PATH::spj_code.c_str(), "-d", 
-            		FILE_PATH::runtime_dir.c_str(), NULL);
-            break;
-		case LANG::PYTHON:
-			break;
 		default:
 			LOG_WARNING("exec compile spj error");
         	exit(EXIT::COMPILE_SPJ);
@@ -98,12 +90,6 @@ void exec_spj(int lang) {
 		case LANG::CPP:
 			execl((FILE_PATH::runtime_dir + "/SPJ").c_str(), "SPJ", NULL);
             break;
-		case LANG::JAVA:
-			execlp((FILE_PATH::runtime_dir + "/java").c_str(), "java", "SPJ", NULL);
-            break;
-		case LANG::PYTHON:
-			execlp((FILE_PATH::runtime_dir + "/python").c_str(), "python", "SPJ", NULL);
-			break;
 		default:
 			LOG_WARNING("exec spj error");
         	exit(EXIT::PRE_JUDGE_PTRACE);

@@ -77,6 +77,7 @@ namespace FILE_PATH {
 	const string TMP = "/tmp";
 	string spj_code;
 	string source_code;
+	string source_code_name;
 	string exec;
 	string exec_spj;
 	string input_dir;

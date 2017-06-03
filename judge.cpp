@@ -55,6 +55,15 @@ static int get_language(const string &filename) {
     return LANG::UNKNOWN;
 }
 
+static string get_source_code_name(const string &filename) {
+    string suffix = "";
+    for (int i = filename.size() - 1; i >= 0 && filename[i] != '/'; i --) {
+        suffix += filename[i];
+    }
+    reverse(suffix.begin(), suffix.end());
+    return suffix;
+}
+
 static int get_language(int compilerType) {
     if (compilerType == 0) {
         return LANG::C;
@@ -124,6 +133,7 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
  		}
  	}
 
+    FILE_PATH::source_code_name = get_source_code_name(FILE_PATH::source_code);
     FILE_PATH::exec 			= FILE_PATH::runtime_dir + "/a.out";
     FILE_PATH::input_dir 		= FILE_PATH::runtime_dir + "/in";
     FILE_PATH::output_dir 		= FILE_PATH::runtime_dir + "/out";
@@ -133,6 +143,7 @@ static void parse_parameters_and_init(int argc, char *argv[]) {
     } else {
         string rm_exec_output_files = "rm -rf " + FILE_PATH::exec_output_dir;
         system(rm_exec_output_files.c_str());
+        system(("mkdir " + FILE_PATH::exec_output_dir).c_str());
     }
     FILE_PATH::result 			= FILE_PATH::runtime_dir + "/result.json";
     FILE_PATH::compiler_stderr  = FILE_PATH::runtime_dir + "/stderr_file_compiler.txt";
@@ -180,8 +191,8 @@ static void compile_source_code() {
     	}
         signal(SIGALRM, callback);
         signal(SIGXFSZ, callback);
-        system(("chmod 640 " + FILE_PATH::input_dir).c_str());
-        system(("chmod 640 " + FILE_PATH::output_dir).c_str());
+        system(("chmod 740 " + FILE_PATH::input_dir).c_str());
+        system(("chmod 740 " + FILE_PATH::output_dir).c_str());
         struct passwd *nobody = getpwnam("nobody");
 
         if (nobody == NULL) {
@@ -303,6 +314,7 @@ static bool is_valid_syscall(int syscall_id) {
 }
 
 static void set_io_redirect() {
+	LOG_TRACE("uid = %d\n", getuid());
 	LOG_TRACE("Start to redirect the IO.");
     stdin = freopen((FILE_PATH::input_dir + "/" + FILE_PATH::cur_input).c_str(), "r", stdin);
     stdout = freopen((FILE_PATH::exec_output_dir + "/" + FILE_PATH::cur_exec_output).c_str(), "w", stdout);
@@ -333,7 +345,7 @@ static void set_security_control() {
         exit(EXIT::SET_SECURITY);
     }
 
-    if (PROBLEM::lang != LANG::JAVA) {
+    if (PROBLEM::lang != LANG::JAVA && PROBLEM::lang != LANG::PYTHON) {
         if (EXIT_SUCCESS != chroot(cwd)) {
             LOG_WARNING("Chroot(%s) failed. %d: %s", cwd, errno, strerror(errno));
             exit(EXIT::SET_SECURITY);
@@ -362,8 +374,6 @@ static void set_runtime_limit() {
         LOG_WARNING("Fail to setrlimit for RLIMIT_STACK");
         exit(EXIT::SET_LIMIT);
     }
-
-    log_close();
 
     lim.rlim_max = PROBLEM::output_limit * LIMIT::MEM_UNIT;
     lim.rlim_cur = lim.rlim_max;
@@ -399,7 +409,7 @@ static void execute_source_code() {
 
     	set_runtime_limit();
 
-    	exec_run(PROBLEM::lang);
+        exec_run(PROBLEM::compiler);
     } else {
     	int status = 0;
     	int syscall_id = 0;
@@ -437,6 +447,7 @@ static void execute_source_code() {
                 } else {
                     LOG_WARNING("Some errors occured");
                     PROBLEM::result = RESULT::RE;
+                    exit(EXIT::OK);
                 }
                 break;
             } 
@@ -668,11 +679,13 @@ int main(int argc, char *argv[]) {
 
 	parse_parameters_and_init(argc, argv);
 
-	compile_source_code();
-
-	if (PROBLEM::is_recompile) {
+	if (PROBLEM::is_recompile && PROBLEM::lang != LANG::PYTHON) {
 		compile_spj_code();
 	}
+
+    if (PROBLEM::lang != LANG::PYTHON) {
+        compile_source_code();
+    }
 
 	vector<string> input_files = get_files(FILE_PATH::input_dir);
 
