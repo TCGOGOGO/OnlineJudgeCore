@@ -1,0 +1,71 @@
+NOTICE [2017-06-03 18:13:53] [logger.h:57] log_open
+WARNING [2017-06-03 18:13:53] [judge.cpp:662] Opendir failed. 2: No such file or directory
+TRACE [2017-06-03 18:13:53] [judge.cpp:633] The final result is SE 0 0 
+TRACE [2017-06-03 18:13:53] [logger.h:63] log_close
+NOTICE [2017-06-03 18:15:43] [logger.h:57] log_open
+TRACE [2017-06-03 18:15:43] [judge.cpp:411] Start executing
+TRACE [2017-06-03 18:15:43] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-03 18:15:43] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-03 18:15:43] [judge.cpp:332] Redirect io done
+TRACE [2017-06-03 18:15:43] [judge.cpp:449] OK. All is good
+TRACE [2017-06-03 18:15:43] [judge.cpp:411] Start executing
+TRACE [2017-06-03 18:15:43] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-03 18:15:43] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-03 18:15:43] [judge.cpp:332] Redirect io done
+TRACE [2017-06-03 18:15:43] [judge.cpp:449] OK. All is good
+TRACE [2017-06-03 18:15:43] [judge.cpp:411] Start executing
+TRACE [2017-06-03 18:15:43] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-03 18:15:43] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-03 18:15:43] [judge.cpp:332] Redirect io done
+TRACE [2017-06-03 18:15:43] [judge.cpp:449] OK. All is good
+TRACE [2017-06-03 18:15:43] [judge.cpp:633] The final result is WA 24 3965 
+TRACE [2017-06-03 18:15:43] [logger.h:63] log_close
+NOTICE [2017-06-03 18:16:31] [logger.h:57] log_open
+TRACE [2017-06-03 18:16:31] [judge.cpp:411] Start executing
+TRACE [2017-06-03 18:16:31] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-03 18:16:31] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-03 18:16:31] [judge.cpp:332] Redirect io done
+TRACE [2017-06-03 18:16:31] [judge.cpp:449] OK. All is good
+TRACE [2017-06-03 18:16:31] [judge.cpp:411] Start executing
+TRACE [2017-06-03 18:16:31] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-03 18:16:31] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-03 18:16:31] [judge.cpp:332] Redirect io done
+TRACE [2017-06-03 18:16:31] [judge.cpp:449] OK. All is good
+TRACE [2017-06-03 18:16:32] [judge.cpp:411] Start executing
+TRACE [2017-06-03 18:16:32] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-03 18:16:32] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-03 18:16:32] [judge.cpp:332] Redirect io done
+TRACE [2017-06-03 18:16:32] [judge.cpp:449] OK. All is good
+TRACE [2017-06-03 18:16:32] [judge.cpp:633] The final result is AC 21 3977 
+TRACE [2017-06-03 18:16:32] [logger.h:63] log_close
+NOTICE [2017-06-04 04:09:40] [logger.h:57] log_open
+TRACE [2017-06-04 04:09:40] [exec.h:20]
+ [compiler] Start compile: g++ -o sandbox//a.out sandbox/a.cpp -static -w -lm -O2 -DONLINE_JUDGE
+TRACE [2017-06-04 04:09:41] [judge.cpp:225] Compile finished
+TRACE [2017-06-04 04:09:41] [judge.cpp:229] Compile succeeded
+TRACE [2017-06-04 04:09:41] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:09:41] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:09:41] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:09:41] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:09:41] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:09:41] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:09:41] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:09:41] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:09:41] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:09:41] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:09:41] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:09:41] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:09:41] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:09:41] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:09:41] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:09:41] [judge.cpp:633] The final result is AC 0 404 
+TRACE [2017-06-04 04:09:41] [logger.h:63] log_close

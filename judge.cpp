@@ -202,8 +202,8 @@ static void compile_source_code() {
     	}
         signal(SIGALRM, callback);
         signal(SIGXFSZ, callback);
-        system(("chmod 740 " + FILE_PATH::input_dir).c_str());
-        system(("chmod 740 " + FILE_PATH::output_dir).c_str());
+        //system(("chmod 740 " + FILE_PATH::input_dir).c_str());
+        //system(("chmod 740 " + FILE_PATH::output_dir).c_str());
         struct passwd *nobody = getpwnam("nobody");
 
         if (nobody == NULL) {
