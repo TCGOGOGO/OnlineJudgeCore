@@ -22,4 +22,4 @@ RUN mv /tmp/jsoncpp-src-0.5.0/libs/linux-gcc-5.4.0/libjson_linux-gcc-5.4.0_libmt
 RUN cd /tmp && rm -rf OnlineJudgeCore && git clone https://github.com/TCGOGOGO/OnlineJudgeCore.git && cd OnlineJudgeCore && make && chmod 777 judge && chmod 777 sandbox
 
 EXPOSE 8080
-CMD cd /tmp/OnlineJudgeCore
+CMD cd /tmp/OnlineJudgeCore && ./judge -c sandbox/a.cpp -l 1 -d sandbox && cat sandbox/result.json
