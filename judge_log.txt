@@ -1,0 +1,50 @@
+NOTICE [2017-06-04 04:29:19] [logger.h:57] log_open
+TRACE [2017-06-04 04:29:19] [exec.h:20]
+ [compiler] Start compile: g++ -o sandbox/a.out sandbox/a.cpp -static -w -lm -O2 -DONLINE_JUDGE
+TRACE [2017-06-04 04:29:19] [judge.cpp:225] Compile finished
+TRACE [2017-06-04 04:29:19] [judge.cpp:229] Compile succeeded
+TRACE [2017-06-04 04:29:19] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:29:19] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:29:19] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:29:19] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:29:19] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:29:19] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:29:19] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:29:19] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:29:19] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:29:19] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:29:19] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:29:19] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:29:19] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:29:19] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:29:19] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:29:19] [judge.cpp:633] The final result is AC 0 393 
+TRACE [2017-06-04 04:29:19] [logger.h:63] log_close
+NOTICE [2017-06-04 04:29:45] [logger.h:57] log_open
+TRACE [2017-06-04 04:29:45] [exec.h:20]
+ [compiler] Start compile: g++ -o sandbox/a.out sandbox/a.cpp -static -w -lm -O2 -DONLINE_JUDGE
+TRACE [2017-06-04 04:29:45] [judge.cpp:225] Compile finished
+TRACE [2017-06-04 04:29:45] [judge.cpp:229] Compile succeeded
+TRACE [2017-06-04 04:29:45] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:29:45] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:29:45] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:29:45] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:29:45] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:29:45] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:29:45] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:29:45] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:29:45] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:29:45] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:29:45] [judge.cpp:411] Start executing
+TRACE [2017-06-04 04:29:45] [judge.cpp:324] uid = 0
+
+TRACE [2017-06-04 04:29:45] [judge.cpp:325] Start to redirect the IO.
+TRACE [2017-06-04 04:29:45] [judge.cpp:332] Redirect io done
+TRACE [2017-06-04 04:29:45] [judge.cpp:449] OK. All is good
+TRACE [2017-06-04 04:29:45] [judge.cpp:633] The final result is AC 0 402 
+TRACE [2017-06-04 04:29:45] [logger.h:63] log_close

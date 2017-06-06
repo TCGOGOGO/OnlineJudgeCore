@@ -202,8 +202,8 @@ static void compile_source_code() {
     	}
         signal(SIGALRM, callback);
         signal(SIGXFSZ, callback);
-        //system(("chmod 740 " + FILE_PATH::input_dir).c_str());
-        //system(("chmod 740 " + FILE_PATH::output_dir).c_str());
+        system(("chmod 740 " + FILE_PATH::input_dir).c_str());
+        system(("chmod 740 " + FILE_PATH::output_dir).c_str());
         struct passwd *nobody = getpwnam("nobody");
 
         if (nobody == NULL) {
@@ -333,12 +333,12 @@ static void set_io_redirect() {
 }
 
 static void set_security_control() {
-    struct passwd *nobody = getpwnam("nobody");
+    //struct passwd *nobody = getpwnam("nobody");
 
-    if (nobody == NULL){
-        LOG_WARNING("Cannot find nobody. %d: %s", errno, strerror(errno));
-        exit(EXIT::SET_SECURITY);
-    }
+    //if (nobody == NULL){
+    //    LOG_WARNING("Cannot find nobody. %d: %s", errno, strerror(errno));
+    //    exit(EXIT::SET_SECURITY);
+    //}
 
     if (EXIT_SUCCESS != chdir(FILE_PATH::runtime_dir.c_str())) {
         LOG_WARNING("Chdir(%s) failed, %d: %s", 
@@ -357,11 +357,11 @@ static void set_security_control() {
             LOG_WARNING("Chroot(%s) failed. %d: %s", cwd, errno, strerror(errno));
             exit(EXIT::SET_SECURITY);
         }
-        if (EXIT_SUCCESS != setuid(nobody -> pw_uid)) {
-            LOG_WARNING("Setuid(%d) failed. %d: %s", 
-                nobody -> pw_uid, errno, strerror(errno));
-            exit(EXIT::SET_SECURITY);
-        }
+        //if (EXIT_SUCCESS != setuid(nobody -> pw_uid)) {
+        //    LOG_WARNING("Setuid(%d) failed. %d: %s", 
+        //        nobody -> pw_uid, errno, strerror(errno));
+        //    exit(EXIT::SET_SECURITY);
+        //}
     }
 }
 
